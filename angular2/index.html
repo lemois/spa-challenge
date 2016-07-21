@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <title>Angular 2 QuickStart</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+    <!-- 1. Load libraries -->
+     <!-- Polyfill(s) for older browsers -->
+    <script src="node_modules/core-js/client/shim.min.js"></script>
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+    <!-- 2. Configure SystemJS -->
+    <script src="systemjs.config.js"></script>
+    <script>
+      setTimeout(function () {
+        System.import('partial').catch(function(err){ console.error(err); });
+      }, 5000);
+    </script>
+  </head>
+  <!-- 3. Display the application -->
+  <body>
+    <my-app>
+      <h1>Angular2</h1>
+      <input type="text"></input>
+      <my-comments [identifier]="'A'">Loading...</my-comments>
+      <my-comments [identifier]="'B'">Loading...</my-comments>
+      <my-timeline>Loading...</my-timeline>
+      <button id="sample-button">押すとアラートが出るはずだった何か</button>
+      <p>
+        bodyの大部分をmy-appで囲み、Root Component化する方向。<br>
+        ちなみにbodyそのものをRoot Componentにすると、scriptタグがstripされたりするので分けた方がよさそう。<br>
+        またそのまま素直にやると元々入っていたHTMLが消し飛んでしまうため、AppComponentのtemplateに元々入っていた内容を動的に指定している。<br>
+        ストアを共有できたりAngular 2の書式のまま値を渡せて便利だが、下記の副作用・懸念点がある。
+      </p>
+      <ul>
+        <dt>パフォーマンス上の懸念</dt>
+        <dd>広範囲のHTMLを差し替えるため</dd>
+        <dt>DOMが作り直されるため、Angular外でバインドされたイベントが消し飛ぶ</dt>
+        <dd>自分で定義するものは全てAngular内で書けばよいが、ソーシャルモジュールなどが誤動作する可能性がある。</dd>
+        <dd>外部JSをラップしたコンポーネントを定義するか、Angular 2初期化後にJSを読み込むような工夫が必要になりそう。</dd>
+      </ul>
+    </my-app>
+    <script>
+      document.querySelector('#sample-button').addEventListener('click', function (e) { alert('Foo'); })
+    </script>
+  </body>
+</html>
