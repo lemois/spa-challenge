@@ -25,7 +25,7 @@ npm install
 npm start
 ```
 
-### redux
+### redux-sample
 
 ```bash
 cd redux-sample
